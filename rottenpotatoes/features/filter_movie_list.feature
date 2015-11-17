@@ -27,19 +27,24 @@ Scenario: restrict to movies with 'PG' or 'R' ratings
 	# enter step to "submit" the search form on the homepage
 	# enter step(s) to ensure that PG and R movies are visible
 	# enter step(s) to ensure that other movies are not visible
-	When I check "ratings[PG]"
-	And I check "ratings[R]"
-	And I uncheck "ratings[G]"
-	And I uncheck "ratings[PG-13]"
-	And I uncheck "ratings[NC-17]"
+	When I check the following ratings: PG,R
+	And I uncheck the following ratings: G,PG-13,NC-17
+	#And I uncheck "ratings[G]"
+	#And I uncheck "ratings[PG-13]"
+	#And I uncheck "ratings[NC-17]"
 	And I press "ratings_submit"
-	Then I should see /^PG$/
-	And I should see /^R$/
-	And I should not see /^PG-13$/
-	And I should not see /^NC-17$/
-	And I should not see /^G$/
+	Then I should see the ratings: PG,R
+	And I should not see the ratings: G,PG-13,NC-17
+	#Then I should see /^PG$/
+	#And I should see /^R$/
+	#And I should not see /^PG-13$/
+	#And I should not see /^NC-17$/
+	#And I should not see /^G$/
+
 
 	
 
 Scenario: all ratings selected
 	# see assignment
+	When I check all of the ratings
+	Then I should see all the movies
